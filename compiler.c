@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
     for (long long int i=1;i<argc;i++) {
         ////if argument is not a flag, skip to next argument
         if (argv[i][0]!='-') {continue;}
-        ArgvCharSize=sizeof(argv[i])/sizeof(char);
+        for (ArgvCharSize=0;argv[i][ArgvCharSize]!='\0';ArgvCharSize++) {}
         for (long long int k=1;k<ArgvCharSize;k++) {
             ////if any char/string in the argument matches, change its constant
             if (argv[i][k]=='d') {debug=1;}
@@ -66,10 +66,6 @@ int main(int argc, char *argv[]) {
     fseek(fptr, 0, SEEK_END);
     char file[ftell(fptr)+1];
     fseek(fptr, 0, SEEK_SET);
-    if (file==NULL) {
-        fprintf(stderr,"Memory allocation failed.");
-        return 1;
-    }
     ///copy from file
     if (fread(file,1,sizeof(file),fptr)==0) {
         fprintf(stderr,"File is empty.");
@@ -229,7 +225,7 @@ int main(int argc, char *argv[]) {
         /////write new fileline
         temp=0;
         /*temp=-address offset*/
-        printf("%d\n",FileLineLengths[i]);
+        printf("%lld\n",FileLineLengths[i]);
         char_temp_arr=(char *)calloc(FileLineLengths[i]+1,sizeof(char));
         /*char_temp_arr=new fileline*/
         for (long long int k=0;k<FileLineLengths[i]+temp;k++) {
@@ -256,7 +252,7 @@ int main(int argc, char *argv[]) {
     ////free the addresses that are empty
     for (long long int i=0;i<FileLineCount-temp;i++) {
         /////if fileline is not empty, skip, else free the line and increase the -offset
-        if (FileLines[i-temp]!="\0") {continue;}
+        if (FileLines[i-temp][0]!='\0') {continue;}
         free(FileLines[i-temp]);
         FileLines[i-temp]=NULL;
         temp++;
@@ -300,10 +296,10 @@ int main(int argc, char *argv[]) {
     /*debug*/if (debug) {printf("6\n");}/*debug*/
     /*debug*/if (debug) {
         for (int i=0;i<FileLineCount;i++) {
-            for (int k=0;k<FileLineLengths[i];k++) {printf("line %lld, char %d: %c,%d\n",i,k,FileLines[i][k],FileLines[i][k]);}
+            for (int k=0;k<FileLineLengths[i];k++) {printf("line %d, char %d: %c,%d\n",i,k,FileLines[i][k],FileLines[i][k]);}
         }
         for (int i=0;i<FileLineCount;i++) {
-            printf("line %lld: %s\n",i,FileLines[i]);
+            printf("line %d: %s\n",i,FileLines[i]);
         }
     }/*debug*/
     long long int *LineDepths;
