@@ -1,0 +1,3 @@
+/home/jyodannmeansu/scripts/c/kitsune/CMakeFiles/kitsune.dir
+/home/jyodannmeansu/scripts/c/kitsune/CMakeFiles/edit_cache.dir
+/home/jyodannmeansu/scripts/c/kitsune/CMakeFiles/rebuild_cache.dir
