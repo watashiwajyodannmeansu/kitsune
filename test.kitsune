@@ -1,0 +1,4 @@
+function main(string argv) {
+    int d=0;
+    printf("Hello, world! Variable: %d", d);
+}
